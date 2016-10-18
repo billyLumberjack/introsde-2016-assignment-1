@@ -13,6 +13,12 @@ public class HealthProfile {
 	private double weight; // in kg
 	private double height; // in m
 
+	public void print(){
+		System.out.println("Weight: "+this.weight);
+		System.out.println("Height: "+this.height);
+		System.out.println("BMI: "+this.getBMI());
+	}
+	
 	public HealthProfile(double weight, double height) {
 		this.weight = weight;
 		this.height = height;
