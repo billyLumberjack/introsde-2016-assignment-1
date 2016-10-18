@@ -1,8 +1,11 @@
-<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="people" type="peopleType"/>
   
 	<xs:complexType name="peopleType">
-  		<xs:element name="peopleList" type="peopleListType"/>
+		<xs:sequence>
+  			<xs:element name="peopleList" type="peopleListType"/>
+  		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="peopleListType">
@@ -18,7 +21,7 @@
 			<xs:element type="xs:date" name="birthdate" />
 			<xs:element name="healthprofile" type="hpType" minOccurs="0" maxOccurs="1"/>
 		</xs:sequence>      
-		<xsd:attribute name="id" type="xsd:ID" use="required"/>                  
+		<xs:attribute name="id" type="xs:ID" use="required"/>                  
 	</xs:complexType>  
 				            
 	<xs:complexType name="hpType">
