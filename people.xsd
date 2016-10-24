@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="people" type="peopleType"/>
+  <xs:element name="people" type="people"/>
   
-	<xs:complexType name="peopleType">
+	<xs:complexType name="people">
 		<xs:sequence>
-  			<xs:element name="peopleList" type="peopleListType"/>
+  			<xs:element name="person" type="person" maxOccurs="unbounded"/>
   		</xs:sequence>
 	</xs:complexType>
-	
-	<xs:complexType name="peopleListType">
-          <xs:sequence>
-          	<xs:element name="person" type="personType" maxOccurs="unbounded"/>
-          </xs:sequence>
-	</xs:complexType>
          
-	<xs:complexType name="personType">
+	<xs:complexType name="person">
 		<xs:sequence>
 			<xs:element type="xs:string" name="firstname" />
 			<xs:element type="xs:string" name="lastname" />
-			<xs:element type="xs:date" name="birthdate" />
-			<xs:element name="healthprofile" type="hpType" minOccurs="0" maxOccurs="1"/>
-		</xs:sequence>      
-		<xs:attribute name="id" type="xs:ID" use="required"/>                  
+			<xs:element type="xs:dateTime" name="birthdate" />
+			<xs:element name="healthprofile" type="healthprofile" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence> 
+		<xs:attribute name="id" type="xs:ID" use="required"/>
 	</xs:complexType>  
 				            
-	<xs:complexType name="hpType">
+	<xs:complexType name="healthprofile">
 	  <xs:sequence>
+		<xs:element type="xs:dateTime" name="lastupdate" />	  
 	    <xs:element type="xs:float" name="weight" />
 	    <xs:element type="xs:float" name="height" />
 	    <xs:element type="xs:float" name="bmi" />

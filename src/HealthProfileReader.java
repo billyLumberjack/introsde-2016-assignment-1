@@ -1,14 +1,16 @@
+import generated.*;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,32 +21,19 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import model.HealthProfile;
-import model.Person;
-import dao.PeopleStore;
-
 public class HealthProfileReader {  	
-	public static PeopleStore people = new PeopleStore();
+	public static People people = null;
 
 	public static void main(String[] args) throws Exception {
-		printPeopleByWeight(26.93,"<");
-		/*
-		JAXBContext jc = JAXBContext.newInstance(PeopleStore.class);
-        System.out.println();
-        System.out.println("Output from our XML File: ");
-        Unmarshaller um = jc.createUnmarshaller();
-        PeopleStore people = (PeopleStore) um.unmarshal(new FileReader("people.xml"));
-        List<Person> list = people.getData();
-        for (Person person : list) {
-          System.out.println("Person: " + person.getFirstname() + " born "
-              + person.getBirthdate());
-        }
-        */
-
+		System.out.println("--- Printing all people in list with details ---");
+		printPeopleList();
+		System.out.println("--- Printing Healthprofile from person's id = 5 ---");
+		printHealthprofile(5);
+		System.out.println("--- Printing people whose weight is > 90kg ---");
+		printPeopleByWeight(90, ">");
     }
 	
 	public static void printPeopleByWeight(double weight, String operator){
@@ -54,7 +43,7 @@ public class HealthProfileReader {
 			DocumentBuilder builder = builderFactory.newDocumentBuilder();
 		    Document document = builder.parse(new FileInputStream("people.xml"));
 		    XPath xPath =  XPathFactory.newInstance().newXPath();		
-		    NodeList nodes = (NodeList) xPath.evaluate("/people/peopleList/person[healthprofile/weight"+operator+String.valueOf(weight)+"]", document, XPathConstants.NODESET);
+		    NodeList nodes = (NodeList) xPath.evaluate("//person[healthprofile/weight"+operator+String.valueOf(weight)+"]", document, XPathConstants.NODESET);
 		   
 		    for(int c=0; c<nodes.getLength(); c++){
 		    	Element e = (Element) nodes.item(c);
@@ -67,11 +56,10 @@ public class HealthProfileReader {
 		    			e.getElementsByTagName("lastname").item(0).getTextContent()
 		    			);
 	        	System.out.println("Birthdate: "+e.getElementsByTagName("birthdate").item(0).getTextContent());
-	        	System.out.println("HealthProfile:");
+	        	System.out.println("Healthprofile:");
 	        	System.out.println("Weight: "+e.getElementsByTagName("weight").item(0).getTextContent());
 	        	System.out.println("Height: "+e.getElementsByTagName("height").item(0).getTextContent());
 	        	System.out.println("BMI: "+e.getElementsByTagName("bmi").item(0).getTextContent()+"\n");
-	        
 		    }
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
@@ -98,7 +86,7 @@ public class HealthProfileReader {
 		
 	}
 	
-	public static void printHealthProfile(int id){
+	public static void printHealthprofile(int id) throws DatatypeConfigurationException, ParseException{
 
 		try {
 			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -106,11 +94,12 @@ public class HealthProfileReader {
 		    Document document = builder.parse(new FileInputStream("people.xml"));
 		    XPath xPath =  XPathFactory.newInstance().newXPath();
 		    
-		    double weight = Double.parseDouble(xPath.evaluate("/people/peopleList/person[@id="+id+"]/healthprofile/weight", document));
-		    double height = Double.parseDouble(xPath.evaluate("/people/peopleList/person[@id="+id+"]/healthprofile/height", document));
+		    String lastUpdateString =  xPath.evaluate("//person[@id="+id+"]/healthprofile/lastupdate", document);
+		    double weight = Double.parseDouble(xPath.evaluate("//person[@id="+id+"]/healthprofile/weight", document));
+		    double height = Double.parseDouble(xPath.evaluate("//person[@id="+id+"]/healthprofile/height", document));
 		    
-		    HealthProfile hp = new HealthProfile(weight, height);
-		    hp.print();
+		    Healthprofile hp = new Healthprofile(weight, height, lastUpdateString);
+		    System.out.println(hp.toString());
 		    
 		    }
 		catch (IOException e) {
@@ -130,20 +119,19 @@ public class HealthProfileReader {
 	public static void printPeopleList(){
 		JAXBContext jc;
 		try {
-			jc = JAXBContext.newInstance(PeopleStore.class);
-	        System.out.println();
+			jc = JAXBContext.newInstance(People.class);
 	        System.out.println("Output from our XML File: ");
 	        Unmarshaller um = jc.createUnmarshaller();
-	        PeopleStore people = (PeopleStore) um.unmarshal(new FileReader("people.xml"));
-	        List<Person> list = people.getData();
+	        People p = (People) um.unmarshal(new FileReader("people.xml"));
+	        List<Person> list = p.getPerson();
 	        for (Person person : list) {
-	        	System.out.println("Person id: "+person.getPersonId());
+	        	System.out.println("Person id: "+person.getId());
 	        	System.out.println("first name and last name: "+ person.getFirstname()+" "+person.getLastname());
 	        	System.out.println("Birthdate: "+person.getBirthdate());
-	        	System.out.println("HealthProfile:");
-	        	System.out.println("Weight: "+person.getHProfile().getWeight());
-	        	System.out.println("Height: "+person.getHProfile().getHeight());
-	        	System.out.println("BMI: "+person.getHProfile().getBMI()+"\n");
+	        	System.out.println("Healthprofile:");
+	        	System.out.println("Weight: "+person.getHealthprofile().getWeight());
+	        	System.out.println("Height: "+person.getHealthprofile().getHeight());
+	        	System.out.println("BMI: "+person.getHealthprofile().getBmi()+"\n");
 	        }				
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
@@ -154,7 +142,6 @@ public class HealthProfileReader {
 		}
 	
 	}
-	
 	public static double getWeight(int id){
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
@@ -163,7 +150,7 @@ public class HealthProfileReader {
 		    Document document = builder.parse(new FileInputStream("people.xml"));
 		    
 		    XPath xPath =  XPathFactory.newInstance().newXPath();
-		    return Double.parseDouble(xPath.compile("/people/peopleList/person[@id="+id+"]/healthprofile/weight").evaluate(document));
+		    return Double.parseDouble(xPath.compile("//person[@id="+id+"]/healthprofile/weight").evaluate(document));
 		    }
 		catch (ParserConfigurationException e) {
 		    e.printStackTrace();  
@@ -177,7 +164,6 @@ public class HealthProfileReader {
 		}
 		return -1;
 	}
-	
 	public static double getHeight(int id){
 		try {
 			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -186,7 +172,7 @@ public class HealthProfileReader {
 		    XPath xPath =  XPathFactory.newInstance().newXPath();
 		    
 		    return Double.parseDouble(
-		    		xPath.compile("/people/peopleList/person[@id="+id+"]/healthprofile/height").evaluate(document)
+		    		xPath.compile("//person[@id="+id+"]/healthprofile/height").evaluate(document)
 		    		);
 		    }
 		catch (ParserConfigurationException e) {

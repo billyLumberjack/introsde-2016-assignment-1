@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<people>
+    <person id="0">
+        <firstname>Maria</firstname>
+        <lastname>Russo</lastname>
+        <birthdate>1935-10-23T07:28:51Z</birthdate>
+        <healthprofile>
+            <lastupdate>1968-08-02T07:28:51Z</lastupdate>
+            <weight>25.0</weight>
+            <height>92.0</height>
+            <bmi>0.002953686200378072</bmi>
+        </healthprofile>
+    </person>
+    <person id="1">
+        <firstname>Maria</firstname>
+        <lastname>Russo</lastname>
+        <birthdate>2006-02-03T07:28:51Z</birthdate>
+        <healthprofile>
+            <lastupdate>1920-06-03T07:28:51Z</lastupdate>
+            <weight>49.0</weight>
+            <height>83.0</height>
+            <bmi>0.0071127885034112355</bmi>
+        </healthprofile>
+    </person>
+    <person id="2">
+        <firstname>Maria</firstname>
+        <lastname>Russo</lastname>
+        <birthdate>2001-10-18T07:28:51Z</birthdate>
+        <healthprofile>
+            <lastupdate>2008-12-05T07:28:51Z</lastupdate>
+            <weight>41.0</weight>
+            <height>119.0</height>
+            <bmi>0.002895275757361768</bmi>
+        </healthprofile>
+    </person>
+</people>
