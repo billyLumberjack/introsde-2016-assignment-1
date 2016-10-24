@@ -13,9 +13,9 @@ I wrote 3 main classes
   * **printPeopleByWeight(double, String)** Prints the list of the people inside the database **people.xml** who satisfy a certain criterion expressed by a value and an operator
   * **printPeopleList()** Prints the list of the people inside the database **people.xml**
   * **main** Calls in order:
-   * printPeopleList();
-   * printHealthprofile(5);
-   * printPeopleByWeight(90, ">");     
+    * printPeopleList();
+    * printHealthprofile(5);
+    * printPeopleByWeight(90, ">");     
 * `DataMapper`:
 * `main`: contains the main classes that are targets in the `build.xml` file and that accomplish the assignment goals. The organization was thought in a way useful to separate similar tasks and technologies:
   * `ReadPeople.java`: used for the first 3 tasks (XML and XPATH). Depending on the executed target it is possible to:
