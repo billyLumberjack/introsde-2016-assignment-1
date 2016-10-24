@@ -33,6 +33,7 @@
 	
 	<!-- RESOLVE IVY DEPENDENCIES -->
 	<target name="resolve" depends="install-ivy" description="--> retrieve dependencies with ivy">
+		<mkdir dir="${ivy.jar.dir}"/>
 		<ivy:retrieve pattern="${lib.dir}/[artifact]-[type]-[revision].[ext]"/>
 	</target>		
 	<!-- END OF RESOLVE IVY DEPENDENCIES -->
@@ -111,6 +112,8 @@
 		<echo message="Clean has been called" />
 		<delete dir="${build.dir}" />
 		<echo message="${build.dir} has been deleted" />
+		<delete dir="${lib.dir}" />
+		<echo message="${lib.dir} has been deleted" />
 		<delete file="people.xml" />
 		<delete file="people_new.xml" />
 		<delete file="people_new.json" />
