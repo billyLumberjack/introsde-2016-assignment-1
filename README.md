@@ -15,5 +15,8 @@ I wrote 3 main classes
   * **main** Calls in order:
    * printPeopleList();
    * printHealthprofile(5);
-   * printPeopleByWeight(90, ">");  
+   * printPeopleByWeight(90, ">");     
 * `DataMapper`:
+* `main`: contains the main classes that are targets in the `build.xml` file and that accomplish the assignment goals. The organization was thought in a way useful to separate similar tasks and technologies:
+  * `ReadPeople.java`: used for the first 3 tasks (XML and XPATH). Depending on the executed target it is possible to:
+    * **getAllPeople**: prints all the people with details;
