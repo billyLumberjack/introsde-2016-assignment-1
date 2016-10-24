@@ -13,7 +13,7 @@ I wrote 3 main classes
   * **printPeopleByWeight(double, String)** Prints the list of the people inside the database **people.xml** who satisfy a certain criterion expressed by a value and an operator
   * **printPeopleList()** Prints the list of the people inside the database **people.xml**
   * **main** Calls in order:
-             * printPeopleList();
-             * printHealthprofile(5);
-             * printPeopleByWeight(90, ">");  
+   * printPeopleList();
+   * printHealthprofile(5);
+   * printPeopleByWeight(90, ">");  
 * `DataMapper`:
