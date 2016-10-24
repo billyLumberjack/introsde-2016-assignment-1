@@ -30,6 +30,7 @@ I wrote 3 main classes and one .XSD
     * Cleans local variable
     * Unmarshalls the previous created people from people_new.json
 * `people.xsd`:The XML schema usefull to validate people.xml and to generate through **XJC** the classes to model data
+
 ### About the tasks
 Everything written in `build.xml` is necessary to run **execute.evaluation** target, with the exception of the target 'generate' whose scope is to generate models automatically. I edited such model to fit some implementation needs.
 Before running **execute.evaluation** ant will,
