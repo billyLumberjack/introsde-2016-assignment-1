@@ -3,7 +3,6 @@ import generated.People;
 import generated.Person;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,21 +11,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -45,20 +36,22 @@ public class DataMapper {
 		// TODO Auto-generated method stub
 
 		try {
+			// generate 3 random people and marshall them to people_new.xml
 			System.out.println("--- Initialized variable people as null ---");
 			people = generatePeople();
 			System.out.println("--- generated 3 random people inside the variable ---");
 			marshall(people, "people_new.xml");
 			System.out.println("--- marshalled people to 'people_new.xml' ---");
 			
-			
+			//clean its local variable and unmarshall the previous created people from people_new.xml
 			people = new People();
 			System.out.println("cleaned people variable");
 			System.out.println("people size:\t" + people.getPerson().size());
 			people = unmarshall("people_new.xml");
 			System.out.println("--- unmarshalled from 'people_new.xml' ---");
 			System.out.println("people size:\t" + people.getPerson().size());
-	
+			
+			//generate other 3 random people and marshall them to people_new.json
 			people = new People();
 			System.out.println("--- cleaned variable people ---");
 			System.out.println("people size:\t" + people.getPerson().size());
@@ -67,6 +60,7 @@ public class DataMapper {
 			marshallJSON(people, "people_new.json");
 			System.out.println("--- marshalled people to 'people_new.json' ---");
 			
+			//clean its local variable and unmarshall the previous created people from people_new.json
 			people = new People();
 			System.out.println("cleaned people variable");
 			System.out.println("people size:\t" + people.getPerson().size());
@@ -84,6 +78,7 @@ public class DataMapper {
 	}
 	
 	private static People generatePeople() throws ParseException, DatatypeConfigurationException, NumberFormatException, XPathExpressionException, ParserConfigurationException, FileNotFoundException, SAXException, IOException{
+		// generates 3 random people and return a People object
 		People pp = new People();
 		
 		int nextId = 0;
@@ -131,13 +126,17 @@ public class DataMapper {
 		}
 		return pp;
 	}
+	
     private static double randBetween(int start, int end) {
     	double rnd = start + (int)Math.round(Math.random() * (end - start)); 
     	return Math.floor(rnd * 100) / 100;
     }	
 
 	public static void marshallJSON(People pp, String filename) throws JAXBException, JsonGenerationException, JsonMappingException, IOException{
-		 
+		/*
+		 * given a People istance and a filename the function marshall the object into the indicated file in json format
+		 */
+		
 		// Jackson Object Mapper 
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -154,6 +153,10 @@ public class DataMapper {
 	}
 	
 	public static People unmarshallJSON(String filename) throws JAXBException, IOException{
+		/*
+		 * given a filename the function unmarshall from a json format
+		 * return the People associated istance
+		 */		
 		// Jackson Object Mapper 
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -170,6 +173,9 @@ public class DataMapper {
 	
 	
 	public static void marshall(People p, String filename) throws JAXBException, FileNotFoundException{
+		/*
+		 * given a People istance and a filename the function marshall the object into the indicated file in xml format
+		 */		
 		JAXBContext jc = JAXBContext.newInstance(People.class);
 		Marshaller m = jc.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
@@ -180,7 +186,10 @@ public class DataMapper {
 	}
 	
 	public static People unmarshall(String filename) throws JAXBException, FileNotFoundException{
-		
+		/*
+		 * given a filename the function unmarshall from an xml format
+		 * return the People associated istance
+		 */		
 		
 		JAXBContext jc = JAXBContext.newInstance(People.class);
 		Unmarshaller um = jc.createUnmarshaller();
