@@ -13,10 +13,19 @@ I wrote 3 main classes
   * **printPeopleByWeight(double, String)** Prints the list of the people inside the database **people.xml** who satisfy a certain criterion expressed by a value and an operator
   * **printPeopleList()** Prints the list of the people inside the database **people.xml**
   * **main** Calls in order:
-    * printPeopleList();
-    * printHealthprofile(5);
-    * printPeopleByWeight(90, ">");     
+    * printPeopleList()
+    * printHealthprofile(5)
+    * printPeopleByWeight(90, ">")
 * `DataMapper`:
-* `main`: contains the main classes that are targets in the `build.xml` file and that accomplish the assignment goals. The organization was thought in a way useful to separate similar tasks and technologies:
-  * `ReadPeople.java`: used for the first 3 tasks (XML and XPATH). Depending on the executed target it is possible to:
-    * **getAllPeople**: prints all the people with details;
+  * **generatePeople()** Generates 3 random people inside a new istance of a **People** object and returns it
+  * **marshall(People, String)** Marshall in XML format the People istance passed inside the indicated file
+  * **marshallJSON(People, String)** Marshall in JSON format the People istance passed inside the indicated file
+  * **unmarshall(String)** Unmarshall from the XML file indicated a People istance and returns it
+  * **unmarshallJSON(String)** Unmarshall from the JSON file indicated a People istance and returns it
+  * **main(String[])** Marshalls and Unmarshalls both from XML and from JSON, before each marshalling it generates 3 new **Person** istances inside a **People** object, at each step it cleans the variable in which data are stored:
+    * Generates 3 random people and marshall them to people_new.xml
+    * Cleans local variable
+    * Unmarshalls the previous created people from people_new.xml
+    * Generates other 3 random people and marshall them to people_new.json
+    * Cleans local variable
+    * Unmarshalls the previous created people from people_new.json
