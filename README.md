@@ -44,7 +44,9 @@ It is also implemented a task to clean the folder and delete the generated files
 ### How to run
 Is it possible to make the code working by just running:
 > git clone https://github.com/billyLumberjack/introsde-2016-assignment-1
+
 > cd introsde-2016-assignment-1
+
 > ant execute.evaluation
 
 Eventually it is possile to clean the folder and restore it as after the clone with
