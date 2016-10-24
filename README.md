@@ -40,3 +40,12 @@ Before running **execute.evaluation** ant will,
 * finally run `HealthProfileWriter`, `HealthProfileReader`, `DataMapper`
 
 It is also implemented a task to clean the folder and delete the generated files with the target **clean**
+
+### How to run
+Is it possible to make the code working by just running:
+* 'git clone https://github.com/billyLumberjack/introsde-2016-assignment-1'
+* 'cd introsde-2016-assignment-1'
+* 'ant execute.evaluation'
+
+Eventually it is possile to clean the folder and restore it as after the clone with
+* 'ant clean'
